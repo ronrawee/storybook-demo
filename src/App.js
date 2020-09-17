@@ -1,24 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import Todo from './Todo';
+import TodoContainer from './TodoContainer';
+
 
 function App() {
+  const [input, setInput] = useState('')
+  const [todos, setTodos] = useState([])
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setTodos([...todos, input])
+    setInput("")
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <h1>Hello!</h1>
+
+      <form>
+        <input value={input} onChange={(e) => {
+          setInput(e.target.value)
+        }} type="text"/>
+        <button disabled={!input} onClick={handleSubmit} type="submit">Add Todo</button>
+      </form>
+
+      <TodoContainer todos={todos}/>
     </div>
   );
 }
